@@ -37,10 +37,11 @@ class TestController extends Controller
     public function userLogin(Request $request){
         $data = Login::select('name')->where('name',$request->username)->where('password',$request->password)->first();
         if(!empty($data)){
-            echo "login Successfully";
+            $request->session()->put('user', $request->username);
+            return redirect('/dashboard');
         }
         else{
-            echo "Something Wrong Happened";
+            return redirect()->back()->with('error', 'Please Check Your Credential');
         }
 
     }
@@ -56,11 +57,17 @@ class TestController extends Controller
             ];
             $result = Login::insert($all_request);
             if($result){
-                echo "Inserted Succussfully";
+                $request->session()->flash('msg','Registration Done Please Login Here');
+                return redirect('/');
             }
             else{
-                echo "Something Wrong";
+                return redirect()->back()->with('msg', 'Something Wrong Here');   
+
             }
         }
+    }
+
+    public function dashboard(){
+        return view('dashboard');
     }
 }

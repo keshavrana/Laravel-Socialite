@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/form',[TestController::class,'form']);
 Route::get('/register',[TestController::class,'register']);
+Route::get('/dashboard',[TestController::class,'dashboard']);
 Route::get('/userlogin',[TestController::class,'userLogin']);
 Route::get('/', function () {
     return view('login');
