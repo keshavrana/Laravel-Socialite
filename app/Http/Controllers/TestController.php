@@ -6,7 +6,10 @@ use App\Models\Test;
 use App\Models\Login;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Imports\CustomerImport;
+use Excel;
 use DB;
+use Socialite;
 use Illuminate\Support\Facades\Validator;
 
 class TestController extends Controller
@@ -69,5 +72,44 @@ class TestController extends Controller
 
     public function dashboard(){
         return view('dashboard');
+    }
+
+    public function import(Request $request)
+    {
+        
+        $upload=$request->file('fileupl');
+         //dd($upload);
+        $filePath=$upload->getRealPath();
+        //dd($filePath);
+        $data = Excel::import(new CustomerImport,$filePath);
+        //dd($data);
+        echo "Record Has Been Imported Successfully"; 
+        return redirect('adduser');
+    }
+
+    public function tables(){
+        return view('tables');
+    }
+
+    public function addUser(){
+        return view('adduser');
+    }
+
+    public function github(){
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function githubRedirect(){
+        $user_info = Socialite::driver('github')->user();
+        $user = Login::firstOrCreate([
+            'email' => $user_info->email
+        ], [
+            'name' => $user_info->name,
+            'password' => $user_info->name,
+        ]);
+
+        session()->put('user', $user_info->name);
+        return redirect('/dashboard');
+
     }
 }
