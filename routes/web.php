@@ -26,6 +26,12 @@ Route::get('sign-in/github',[TestController::class,'github']);
 Route::get('sign-in/github/redirect',[TestController::class,'githubRedirect']);
 //End Here
 
+// Google Login Here
+Route::get('sign-in/google',[TestController::class,'google']);
+Route::get('sign-in/google/redirect',[TestController::class,'googleRedirect']);
+//End Here
+
+
 Route::get('logout',function(){
     Session::flush();
     return redirect('/')->with('msg','Logout Successfully');

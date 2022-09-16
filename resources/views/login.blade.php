@@ -80,7 +80,7 @@
                                         <a href="/sign-in/github" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-github fa-fw"></i> Login with Github
                                         </a>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                        <a href="/sign-in/google" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google-f fa-fw"></i> Login with Google
                                         </a>
                                     </form>

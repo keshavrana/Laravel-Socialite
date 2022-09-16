@@ -112,4 +112,23 @@ class TestController extends Controller
         return redirect('/dashboard');
 
     }
+
+    public function google(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleRedirect(){
+        $user_info = Socialite::driver('google')->user();
+        //dd($user_info);
+        $user = Login::firstOrCreate([
+            'email' => $user_info->email
+        ], [
+            'name' => $user_info->name,
+            'password' => $user_info->name,
+        ]);
+
+        session()->put('user', $user_info->name);
+        return redirect('/dashboard');
+
+    }
 }
